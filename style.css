@@ -1,0 +1,121 @@
+.container{
+    width: 90%;
+    margin: auto;
+    background-color: #1E202B;
+    /* display:flex; */
+    height:100vh;
+}
+.content{
+    display: flex;
+    padding:0.5vw;
+}
+.search-head{
+    width: 100%;
+    height: 10vh;
+    padding-top: 30px;
+    
+}
+input{
+    /* margin-top: 5vh; */
+    height: 5vh;
+    width: 30%;
+    border-radius: 10px;
+    vertical-align: middle;
+    font-size: 1.5rem;
+    margin-left: 1vw;
+}
+button{
+    width: 10%;
+    height: 5.6vh;
+    color:white;
+    vertical-align: middle;
+    font-size: 1rem;
+    background-color:#009AD8;border-radius:10px;
+    border: none;
+}
+.weather-display{
+    height:45vh;
+    width: 50%;
+    background-color:#323544;
+    border-radius: 5px;
+    color:aliceblue;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
+    font-size: 1rem;
+}
+.current_data{
+    border: solid white 3px;
+    padding: 1rem;
+    width: 91%;
+    border-radius: 15px;
+    margin: 1%;
+    height:85%;
+}
+.city_temp{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    top: -40px;
+}
+.city_temp img{
+    width: 150px;
+
+}
+.map{
+    background-color:#323544;
+    width:49%;
+    /* height:100%; */
+    margin-left: 1%;
+    border-radius: 5px;
+}
+iframe{
+    width:100%;
+    height:95%;
+    margin-top:1%;
+    border-radius: 5px;
+}
+h1{
+    font-size:5rem;
+}
+#icon_desc{
+    position:relative;
+    bottom:50px;
+    text-align: center;
+    font-size:1rem;
+    color:rgb(158, 157, 157);
+}
+.wind_details{
+    position: relative;
+    top:-60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* border: solid red 1px; */
+    font-size:1rem;
+    color:rgb(158, 157, 157);
+    height:50px;
+    width:90%;
+    display:grid;
+    grid-template-columns: 20% 30% 20%;
+    vertical-align: middle;
+}
+#dig, #wind_speed, #compas{
+    position: relative;
+    bottom:10px;
+    right:-5px;
+}
+#future_data{
+    display: flex;
+    text-align: center;
+    background-color: #2D303D;
+    border-radius: 10px;
+    width: 200%;
+    margin-top: 5%;
+    height:200px;
+}
+#future_data p{
+    font-size: 0.8rem;
+    margin-bottom: 0%;
+}
+.nextDiv{
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <div class="search-head">
+            <input id="city" type="text" placeholder="Enter City Name">
+        <button onClick="getWeather()">Search</button>
+        </div>
+        <div class="content">
+            <div class="weather-display">
+                <div class="current_data">
+                    <div class="location">
+                        <p id="city_name">Delhi, India</p>
+                    </div>
+                    <div class="city_temp">
+                        <h1 id="city_temp">24.25 °C</h1>
+                    
+                        <div class="current_icon">
+                            <img id="current_icon" src="" alt=""><br>
+                            <p id="icon_desc">Clear Sky</p>
+                        </div>
+                    </div>
+                    <div class="wind_details">
+                        <span>
+                            <img src="image\icon-umberella@2x.png" alt="" srcset="">
+                            <span id="dig">23%</span>
+                        </span>
+                        <span >
+                            <img src="image\icon-wind@2x.png" alt="" srcset="">
+                            <span id="wind_speed">14</span>
+                        </span>
+                        <span >
+                            <img src="image\icon-compass@2x.png" >
+                            <span id="compas">West</span>
+                        </span>
+                    </div>
+                    
+                </div>
+                <div id="future_data">
+                    
+                </div>
+                
+            </div>
+            <div class="map">
+                <iframe style="border:0" loading="lazy" allowfullscreen src="">
+                    
+                </iframe>
+            </div>
+        </div>
+        
+    </main>
+</body>
+
+</html>
+<script>
+    //GeoLocation Code
+getLocation()
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+}
+var loc;
+function showPosition(position) {
+loc = "Latitude: " + position.coords.latitude +
+  "<br>Longitude: " + position.coords.longitude;
+}//GeoLocation code ends hare
+
+
+
+    const weather_key = '61ab84bffebe1e115afdcd265cd70ec3';
+    
+    const map_key = 'AIzaSyB1Grzz8kxP_4iXShaVuWwj4BVYXM0gcp0'
+
+    async function getWeather() {
+        let city = document.getElementById("city").value;
+        
+
+        //Weather API
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weather_key}&units=metric`
+
+
+        let mapCity=city
+        mapCity=mapCity.split(" ").join('+')
+
+        //Google map API
+        let map=document.querySelector("iframe");
+        map.src =`https://www.google.com/maps/embed/v1/place?key=${map_key}
+    &q=${mapCity}`
+
+        const res = await fetch(url)
+        const data = await res.json()
+        console.log("Current weather",data)
+
+        //Api call for  7 day weather
+
+        let sevenDay_url=`https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&exclude=minutely,hourly,alerts&appid=${weather_key}&units=metric`
+
+        let city_name=document.getElementById("city_name")
+        city_name.innerText=data.name;
+
+        let current_icon=document.querySelector("#current_icon");
+        current_icon.src=`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+
+        let icon_desc=document.querySelector("#icon_desc")
+        icon_desc.innerText=data.weather[0].description;
+
+        const sevenDay_res = await fetch(sevenDay_url)
+        const sevenday_data = await sevenDay_res.json()
+        console.log("Seven Day",sevenday_data.daily)
+
+        let current_temp=document.getElementById("city_temp")
+        current_temp.innerText=sevenday_data.current.temp +" °C";
+
+        document.getElementById("dig").innerText=data.main.humidity+"%";
+        document.getElementById("wind_speed").innerText=data.wind.speed+"Km/h"
+        document.getElementById("compas").innerText="East";
+
+        showNext(sevenday_data.daily)
+    }
+//for dates
+var dt = new Date();
+
+var weekday = new Array(7);
+weekday[0] = "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
+
+//date code ends hare
+
+    function showNext(sDay){
+
+        var sevenDays=document.getElementById("future_data");
+        sevenDays.innerHTML=null;
+        // console.log(sevenday_data.daily)
+
+        sDay.map(function(d,index){
+            let nextDiv=document.createElement("div");
+            nextDiv.classList="nextDiv"
+
+            let day=document.createElement("p");
+            day.innerText=weekday[(dt.getDay()+index)%7];
+
+            let ficon=document.createElement("img");
+            ficon.src=`http://openweathermap.org/img/wn/${d.weather[0].icon}@2x.png`
+
+            let maxtemp=document.createElement("p")
+            maxtemp.innerText=d.temp.max+" °C";
+
+            let mintemp=document.createElement("p")
+            mintemp.innerText=d.temp.min+" °C";
+            mintemp.style.color="gray"
+
+            nextDiv.append(day, ficon, maxtemp, mintemp);
+            sevenDays.append(nextDiv);
+        })
+    }
+
+
+</script>
