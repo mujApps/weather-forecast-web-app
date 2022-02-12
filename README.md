@@ -1,4 +1,9 @@
 # weather-forecast-web-app
+
+<img src="https://raw.githubusercontent.com/mujhusain/weather-forecast-web-app/main/image/Screenshot%20(111).png"/>
+
+
+
 This weather forecast web app collecting information about the atmosphere, such as humidity, wind speed, and temperature with upcoming seven day info and google map with the help of APIs.
 
 ## 🛠  Technologies and tools
